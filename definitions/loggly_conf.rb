@@ -6,7 +6,7 @@ define :loggly_conf, :action => :create do
   input_name = params[:name]
   
   # So we don't hammer Loggly's API
-  bash "remote loggly configuration" do
+  bash "remote loggly configuration for #{input_name}" do
     not_if "test -f /var/lock/loggly-#{input_name}"
     code <<-EOH
       loggly-create-input -U #{node[:loggly][:username]} -P #{node[:loggly][:password]} -D #{node[:loggly][:domain]} -i #{input_name} -s syslogtcp
