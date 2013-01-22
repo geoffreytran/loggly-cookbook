@@ -18,10 +18,13 @@
 # limitations under the License.
 #
 
-package "python-setuptools"
+package "python-setuptools" do
+  action :install
+end.run_action(:run)
+
 easy_install_package "loggly" do
   version node[:loggly][:loggly_python][:version]
-end
+end.run_action(:run)
 
 file "/etc/profile.d/loggly-env.sh" do
   content <<-EOH
@@ -29,4 +32,4 @@ export LOGGLY_USERNAME="#{node[:loggly][:username]}"
 export LOGGLY_PASSWORD="#{node[:loggly][:password]}"
 export LOGGLY_DOMAIN="#{node[:loggly][:domain]}"
   EOH
-end
+end.run_action(:run)
